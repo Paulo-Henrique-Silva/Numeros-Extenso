@@ -45,9 +45,18 @@ char *convertsNum(char *num)
 {
     char *answer;
 
+    char *firstDigit[] = 
+    {
+        "One", "Two", "Three", "Four", "Five", 
+        "Six", "Seven", "Eight", "Nine"
+    };
+
+    int numIn_intForm = atoi(num);
+
     switch(strlen(num))
     {
         case 1:
+            answer = firstDigit[numIn_intForm - 1]; //-1 because it is an array
             break; 
         default:
             answer = "Sorry, this number is too long!";
