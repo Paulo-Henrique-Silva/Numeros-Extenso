@@ -74,6 +74,13 @@ void convertsNum(char *num)
     {
         "", " One Hundred", " Two Hundred", " Three Hundred", " Four Hundred", " Five Hundred", 
         " Six Hundred", " Seven Hundred", " Eight Hundred", " Nine Hundred"
+    },
+
+    *fourthDigit_str[] = 
+    {
+        "", " One Thousand", " Two Thousand", " Three Thousand", " Four Thousand", 
+        " Five Thousand", " Six Thousand", " Seven Thousand", " Eight Thousand", 
+        " Nine Thousand"
     };
     //numbers strings
 
@@ -99,7 +106,8 @@ void convertsNum(char *num)
 
         case 3:
 
-            if(numIn_intForm % 100 < 20) //(0XX) if "XX" is smaller than 20
+            //(0XX) if "XX" is smaller than 20
+            if(numIn_intForm % 100 > 9 && numIn_intForm % 100 < 20) 
             {
                 printf("\nAnswer =%s%s",
                 thirdDigit_str[thirdDigit_num], numbersBefore_20[firstDigit_num]);
@@ -108,6 +116,23 @@ void convertsNum(char *num)
             {
                 printf("\nAnswer =%s%s%s", 
                 thirdDigit_str[thirdDigit_num],
+                secondDigit_str[secondDigit_num], firstDigit_str[firstDigit_num]);
+            }
+            break;
+
+        case 4:
+
+            //(00XX) if "XX" is smaller than 20
+            if(numIn_intForm % 100 > 9 && numIn_intForm % 100 < 20) 
+            {
+                printf("\nAnswer =%s%s%s",
+                fourthDigit_str[fourthDigit_num], thirdDigit_str[thirdDigit_num],
+                numbersBefore_20[firstDigit_num]);
+            }
+            else
+            {
+                printf("\nAnswer =%s%s%s%s", 
+                fourthDigit_str[fourthDigit_num], thirdDigit_str[thirdDigit_num],
                 secondDigit_str[secondDigit_num], firstDigit_str[firstDigit_num]);
             }
             break;
