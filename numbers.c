@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *convertsNum(char *num); 
+void convertsNum(char *num); 
 
 int main()
 {
@@ -15,7 +15,7 @@ int main()
     do 
     {
         system("cls");
-        printf("\t\t\t\tNUMBERS TO WORDS");
+        printf("\t\t\t\tNUMBERS TO WORDS - 1 to 9999");
 
         printf("\n\nType the Number(E - Exit): ");
         fgets(input, 1024, stdin);
@@ -29,7 +29,7 @@ int main()
         else if(atoi(input) == 0) //if it is not a number
             printf("\nInvalid Input!");
         else
-            printf("\n%s", convertsNum(input));
+            convertsNum(input);
 
         getch(); //stops before reset
     }
@@ -41,27 +41,79 @@ int main()
     return 0;
 }
 
-char *convertsNum(char *num)
+void convertsNum(char *num)
 {
-    char *answer;
+    int 
+    numIn_intForm = atoi(num),
+    firstDigit_num = numIn_intForm % 10, 
+    secondDigit_num = (numIn_intForm % 100 - firstDigit_num) / 10, 
+    thirdDigit_num = (numIn_intForm % 1000 - secondDigit_num) / 100, 
+    fourthDigit_num = (numIn_intForm % 10000 - thirdDigit_num) / 1000; 
+    //calculates each digit of the Number
 
-    char *firstDigit[] = 
+    char 
+    *numbersBefore_20[] =
     {
-        "One", "Two", "Three", "Four", "Five", 
-        "Six", "Seven", "Eight", "Nine"
-    };
+        " Ten", " Eleven", " Twelve", " Thirteen", " Fourteen", " Fifteen", 
+        " Sixteen", " Seventeen", " Eighteen", " Nineteen"
+    },
 
-    int numIn_intForm = atoi(num);
+    *firstDigit_str[] = 
+    {
+        "", " One", " Two", " Three", " Four", " Five", 
+        " Six", " Seven", " Eight", " Nine"
+    },
+
+    *secondDigit_str[] = 
+    {
+        "", "", " Twenty", " Thirty", " Forty", " Fifty", 
+        " Sixty", " Seventy", " Eighty", " Ninety"
+    },
+
+    *thirdDigit_str[] = 
+    {
+        "", " One Hundred", " Two Hundred", " Three Hundred", " Four Hundred", " Five Hundred", 
+        " Six Hundred", " Seven Hundred", " Eight Hundred", " Nine Hundred"
+    };
+    //numbers strings
 
     switch(strlen(num))
     {
         case 1:
-            answer = firstDigit[numIn_intForm - 1]; //-1 because it is an array
+
+            printf("\nAnswer =%s", firstDigit_str[firstDigit_num]);
             break; 
+
+        case 2:
+
+            if(numIn_intForm < 20)
+            {
+                printf("\nAnswer =%s", numbersBefore_20[firstDigit_num]);
+            }
+            else
+            {
+                printf("\nAnswer =%s%s", 
+                secondDigit_str[secondDigit_num], firstDigit_str[firstDigit_num]);
+            }
+            break;
+
+        case 3:
+
+            if(numIn_intForm % 100 < 20) //(0XX) if "XX" is smaller than 20
+            {
+                printf("\nAnswer =%s%s",
+                thirdDigit_str[thirdDigit_num], numbersBefore_20[firstDigit_num]);
+            }
+            else
+            {
+                printf("\nAnswer =%s%s%s", 
+                thirdDigit_str[thirdDigit_num],
+                secondDigit_str[secondDigit_num], firstDigit_str[firstDigit_num]);
+            }
+            break;
+
         default:
-            answer = "Sorry, this number is too long!";
+            printf("\nSorry, this number is too long!");
             break;
     }
-
-    return answer;
 }
